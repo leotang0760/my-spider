@@ -1,0 +1,25 @@
+name: MineKuai Auto Login
+
+on:
+  schedule:
+    - cron: '01 5 * * *'  # UTC时间5:01（北京时间13:01）
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  automate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          pip install selenium webdriver-manager
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser chromium-chromedriver
+      - name: Run Script
+        run: python minekuai_auto.py
